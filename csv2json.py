@@ -24,7 +24,7 @@ import sys
 
 
 # Options
-ENCODING = 'latin2'
+ENCODING = 'utf8' #'latin2'
 CSV_DELIMITER = ';'
 
 # Check arguments
@@ -56,7 +56,7 @@ with codecs.open(in_file, 'r', encoding=ENCODING) as f:
   for row in reader:
 
     if not header_row:
-      header_row = row
+      header_row = list(map(lambda x: x.lower(), row))
       continue
 
     pk = row[0]
@@ -77,7 +77,7 @@ with codecs.open(in_file, 'r', encoding=ENCODING) as f:
         fields[header_row[i+1]] = active_field.strip()
 
     row_dict = {}
-    row_dict['pk'] = int(pk)
+    row_dict['pk'] = str(pk)  # int(pk)
     row_dict['model'] = model_name
     row_dict['fields'] = fields
     entries.append(row_dict)
